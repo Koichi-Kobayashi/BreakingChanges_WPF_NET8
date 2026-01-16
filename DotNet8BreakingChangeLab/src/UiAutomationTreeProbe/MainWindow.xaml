@@ -1,0 +1,62 @@
+<Window x:Class="UiAutomationTreeProbe.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="UI Automation Tree Probe (.NET 8)" Height="620" Width="980">
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock FontSize="14" TextWrapping="Wrap">
+            This app dumps the UIA (UI Automation) tree for this window using System.Windows.Automation.
+            If .NET 8 changes UIA exposure for some controls, you will observe differences compared to .NET 6.
+        </TextBlock>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10,0,10">
+            <Button Content="Dump UIA tree" Width="140" Margin="0,0,6,0" Click="Dump_Click"/>
+            <Button Content="Clear" Width="90" Margin="0,0,12,0" Click="Clear_Click"/>
+            <CheckBox x:Name="LimitDepth" Content="Limit depth (6)" IsChecked="True" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <CheckBox x:Name="OnlyInteresting" Content="Only interesting patterns" IsChecked="True" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Controls to probe" Margin="0,0,8,0">
+                <StackPanel Margin="10" >
+                    <TextBox x:Name="NameBox" AutomationProperties.AutomationId="NameBox" Width="260" Margin="0,0,0,6" Text="Hello UIA"/>
+                    <PasswordBox x:Name="PasswordBox" AutomationProperties.AutomationId="PasswordBox" Width="260" Margin="0,0,0,6"/>
+                    <ComboBox x:Name="Combo" AutomationProperties.AutomationId="Combo" Width="260" Margin="0,0,0,6">
+                        <ComboBoxItem>Item A</ComboBoxItem>
+                        <ComboBoxItem>Item B</ComboBoxItem>
+                        <ComboBoxItem>Item C</ComboBoxItem>
+                    </ComboBox>
+                    <ListBox x:Name="List" AutomationProperties.AutomationId="List" Height="200" Width="260" Margin="0,0,0,6">
+                        <ListBoxItem>Row 1</ListBoxItem>
+                        <ListBoxItem>Row 2</ListBoxItem>
+                        <ListBoxItem>Row 3</ListBoxItem>
+                    </ListBox>
+                    <DataGrid x:Name="Grid" AutomationProperties.AutomationId="Grid" Height="220" AutoGenerateColumns="False" CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Log" Grid.Column="1">
+                <TextBox x:Name="LogTextBox" IsReadOnly="True" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,60 @@
+<Window x:Class="DnDDataObjectFormatProbe.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DnDDataObjectFormatProbe"
+        mc:Ignorable="d"
+        Title="DnD DataObject Format Probe (.NET 8)" Height="520" Width="980">
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock TextWrapping="Wrap" FontSize="14">
+            Drag text from the left TextBox to the right TextBox. The log shows DataObject formats observed in DragEnter/Drop.
+        </TextBlock>
+
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Source" Margin="0,0,8,0">
+                <TextBox x:Name="SourceTextBox"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         Text="Drag this text to the target." />
+            </GroupBox>
+
+            <GroupBox Header="Target" Grid.Column="1" Margin="0,0,8,0">
+                <TextBox x:Name="TargetTextBox"
+                         AllowDrop="True"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         PreviewDragEnter="Target_PreviewDragEnter"
+                         PreviewDragOver="Target_PreviewDragOver"
+                         PreviewDrop="Target_PreviewDrop"
+                         Text="Drop here" />
+            </GroupBox>
+
+            <GroupBox Header="Log" Grid.Column="2">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,6">
+                        <Button Content="Clear" Width="90" Margin="0,0,6,0" Click="Clear_Click"/>
+                        <CheckBox x:Name="AutoScroll" Content="Auto scroll" IsChecked="True" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBox x:Name="LogTextBox"
+                             IsReadOnly="True"
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto"/>
+                </DockPanel>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>
